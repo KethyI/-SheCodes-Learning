@@ -31,16 +31,20 @@ function showTemp(response){
     let currentHumidity = response.data.temperature.humidity;
     let wind = document.querySelector("#wind")
     let currentWind = Math.round(response.data.wind.speed);
+    let icon = document.querySelector("#icon");
 
     clouds.innerHTML = currentClouds;
     cityShown.innerHTML = chosenCity;
     tempShown.innerHTML = tempNow;
     humidity.innerHTML = currentHumidity;
     wind.innerHTML = currentWind;
+    icon.setAttribute("src", `${response.data.condition.icon_url}`) 
+    icon.setAttribute("atl", `${response.data.condition.description}`)
 
 }
 
 function CurrentLocationTemp(response){
+    console.log(response);
     let chosenCity = response.data.name;
     let cityShown = document.querySelector("#city-now");
     let tempShown = document.querySelector("#temp-number");
@@ -52,12 +56,17 @@ function CurrentLocationTemp(response){
     let currentHumidity = response.data.main.humidity;
     let wind = document.querySelector("#wind")
     let currentWind = Math.round(response.data.wind.speed);
+    let icon = document.querySelector("#icon");
+
 
     clouds.innerHTML = currentClouds;
     cityShown.innerHTML = chosenCity;
     tempShown.innerHTML = tempNow;
     humidity.innerHTML = currentHumidity;
     wind.innerHTML = currentWind;
+    icon.setAttribute("src", `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`) 
+    icon.setAttribute("atl", `https://openweathermap.org/img/wn/${response.data.weather[0].description}@2x.png`)
+
 
 }
 
@@ -72,28 +81,6 @@ function startSearch(event) {
     let apiKey = "af9f195dtc3b2336169c4ob0f8c90052";
     let apiCity = `https://api.shecodes.io/weather/v1/current?query=${chosenCity}&key=${apiKey}&units=metric`
     axios.get(apiCity).then(showTemp);
-
-}
-
-function showTempCurrent(response) {
-    let chosenCity = document.querySelector("#search-line").value;
-    let cityShown = document.querySelector("#city-now");
-    let tempShown = document.querySelector("#temp-number");
-    let roundTemp = Math.round(response.data.main.temp);
-    let tempNow = roundTemp;
-    let clouds = document.querySelector("#cloudiness");
-    let currentClouds = response.data.weather[0].main;
-    let humidity = document.querySelector("#humidity");
-    let currentHumidity = response.data.main.humidity;
-    let wind = document.querySelector("#wind");
-    let currentWind = Math.round(response.data.wind.speed);
-
-    clouds.innerHTML = currentClouds;
-    cityShown.innerHTML = chosenCity;
-    tempShown.innerHTML = tempNow;
-    humidity.innerHTML = currentHumidity;
-    wind.innerHTML = currentWind;
-
 
 }
 
@@ -167,3 +154,25 @@ searchStart("Kyiv");
 
 // }
 // fahrenheit.addEventListener("click", showFahrenheit);
+
+// function showTempCurrent(response) {
+//     let chosenCity = document.querySelector("#search-line").value;
+//     let cityShown = document.querySelector("#city-now");
+//     let tempShown = document.querySelector("#temp-number");
+//     let roundTemp = Math.round(response.data.main.temp);
+//     let tempNow = roundTemp;
+//     let clouds = document.querySelector("#cloudiness");
+//     let currentClouds = response.data.weather[0].main;
+//     let humidity = document.querySelector("#humidity");
+//     let currentHumidity = response.data.main.humidity;
+//     let wind = document.querySelector("#wind");
+//     let currentWind = Math.round(response.data.wind.speed);
+
+//     clouds.innerHTML = currentClouds;
+//     cityShown.innerHTML = chosenCity;
+//     tempShown.innerHTML = tempNow;
+//     humidity.innerHTML = currentHumidity;
+//     wind.innerHTML = currentWind;
+
+
+// }

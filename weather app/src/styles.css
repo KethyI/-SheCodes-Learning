@@ -81,6 +81,10 @@ a {
   height: 100px;
 }
 
+.condition {
+  width: 75px;
+}
+
 #city-now {
   text-transform: capitalize;
   }
