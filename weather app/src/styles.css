@@ -121,3 +121,8 @@ div.col {
 #current-weather-button:hover {
   background-color: rgba(112, 110, 240, 0.5);
 }
+
+.active {
+  color: rgba(255, 255, 204, 1);
+  cursor: default;
+}

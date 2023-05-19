@@ -20,6 +20,7 @@ let searchLine = document.querySelector("#search-line");
 let chosenCity = document.querySelector("#search-line").value;
     
 function showTemp(response){
+   
     let chosenCity = response.data.city;
     let cityShown = document.querySelector("#city-now");
     let tempShown = document.querySelector("#temp-number");
@@ -32,6 +33,7 @@ function showTemp(response){
     let wind = document.querySelector("#wind")
     let currentWind = Math.round(response.data.wind.speed);
     let icon = document.querySelector("#icon");
+    defaultTemperature = Math.round(response.data.temperature.current);
 
     clouds.innerHTML = currentClouds;
     cityShown.innerHTML = chosenCity;
@@ -44,7 +46,7 @@ function showTemp(response){
 }
 
 function CurrentLocationTemp(response){
-    console.log(response);
+    
     let chosenCity = response.data.name;
     let cityShown = document.querySelector("#city-now");
     let tempShown = document.querySelector("#temp-number");
@@ -112,11 +114,36 @@ function searchStart(city) {
 
 }
 
+function showCelsius(event) {
+    event.preventDefault();
+    fahrenheitButton.classList.remove("active");
+    celsiusButton.classList.add("active");
+    let tempNumber = document.querySelector("#temp-number");
+    tempNumber.innerHTML = defaultTemperature;
+}
+
+function showFahrenheit(event) {
+    event.preventDefault();
+    celsiusButton.classList.remove("active");
+    fahrenheitButton.classList.add("active");
+    let tempNumber = document.querySelector("#temp-number");
+    tempNumber.innerHTML = Math.round((defaultTemperature * 9/5) + 32);
+}
+
+
 searchButton.addEventListener("click", startSearch);
 searchLine.addEventListener("search", startSearch);
 
 let currentLocationButton = document.querySelector("#current-weather-button");
 currentLocationButton.addEventListener("click", searchLocation);
+
+let defaultTemperature;
+
+let celsiusButton = document.querySelector("#celsius");
+celsiusButton.addEventListener("click", showCelsius);
+
+let fahrenheitButton = document.querySelector("#fahrenheit");
+fahrenheitButton.addEventListener("click", showFahrenheit);
 
 searchStart("Kyiv");
 
@@ -137,23 +164,6 @@ searchStart("Kyiv");
 //    }
 
 
-
-// let celsius = document.querySelector("#celsius");
-// function showCelsius() {
-//     let celsiusNumber = document.querySelector("#temp-number");
-//     let currentTemp = "19"
-//     celsiusNumber.innerHTML = currentTemp;
-// }
-// celsius.addEventListener("click", showCelsius);
-
-// let fahrenheit = document.querySelector("#fahrenheit");
-// function showFahrenheit() {
-//     let fahrenheitNumber = document.querySelector("#temp-number");
-//     let currentTemp = "66"
-//     fahrenheitNumber.innerHTML = currentTemp;
-
-// }
-// fahrenheit.addEventListener("click", showFahrenheit);
 
 // function showTempCurrent(response) {
 //     let chosenCity = document.querySelector("#search-line").value;
