@@ -145,6 +145,32 @@ celsiusButton.addEventListener("click", showCelsius);
 let fahrenheitButton = document.querySelector("#fahrenheit");
 fahrenheitButton.addEventListener("click", showFahrenheit);
 
+function makeForecast() {
+    
+    let forecast = document.querySelector("#forecast");
+    let forecastDays = ["Sun", "Mon", "Tue", "Wed", "Thu"];
+    let forecastHTML = "";
+    forecastDays.forEach(function (day) {
+        forecastHTML = forecastHTML + `
+        <div class="card col">
+            <h5 class="card-title">${day}</h5>
+            <div class="row">
+                <div class="col"> 
+                    <img src="img/sun-cloud.png" class="card-img-top" alt="sun-cloud" />
+                </div>
+                <p class="card-text col">
+                    +10°C 
+                    <br />
+                    +6°C
+                </p>
+            </div>
+        </div>
+        `
+        forecast.innerHTML = forecastHTML;
+    })
+}
+
+makeForecast();
 searchStart("Kyiv");
 
 // function getLatLon(response){
