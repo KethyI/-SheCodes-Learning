@@ -19,6 +19,13 @@ let searchButton = document.querySelector("#search-button");
 let searchLine = document.querySelector("#search-line");
 let chosenCity = document.querySelector("#search-line").value;
     
+
+function showForecast(city) {
+    let apiKey = `af9f195dtc3b2336169c4ob0f8c90052`;
+    let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}`
+    axios.get(apiUrl).then(makeForecast);
+}
+
 function showTemp(response){
    
     let chosenCity = response.data.city;
@@ -43,6 +50,7 @@ function showTemp(response){
     icon.setAttribute("src", `${response.data.condition.icon_url}`) 
     icon.setAttribute("atl", `${response.data.condition.description}`)
 
+    showForecast(chosenCity);
 }
 
 function CurrentLocationTemp(response){
@@ -145,8 +153,8 @@ celsiusButton.addEventListener("click", showCelsius);
 let fahrenheitButton = document.querySelector("#fahrenheit");
 fahrenheitButton.addEventListener("click", showFahrenheit);
 
-function makeForecast() {
-    
+function makeForecast(response) {
+    console.log(response);
     let forecast = document.querySelector("#forecast");
     let forecastDays = ["Sun", "Mon", "Tue", "Wed", "Thu"];
     let forecastHTML = "";
