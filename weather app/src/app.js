@@ -22,8 +22,8 @@ let chosenCity = document.querySelector("#search-line").value;
 
 function showForecast(city) {
     let apiKey = `af9f195dtc3b2336169c4ob0f8c90052`;
-    let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}`
-    axios.get(apiUrl).then(makeForecast);
+    let apiUrlForecast = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}`
+    axios.get(apiUrlForecast).then(makeForecast);
 }
 
 function showTemp(response){
@@ -76,7 +76,8 @@ function CurrentLocationTemp(response){
     wind.innerHTML = currentWind;
     icon.setAttribute("src", `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`) 
     icon.setAttribute("atl", `https://openweathermap.org/img/wn/${response.data.weather[0].description}@2x.png`)
-
+    
+    showForecast(chosenCity);
 
 }
 
@@ -153,70 +154,41 @@ celsiusButton.addEventListener("click", showCelsius);
 let fahrenheitButton = document.querySelector("#fahrenheit");
 fahrenheitButton.addEventListener("click", showFahrenheit);
 
+function formatDay(dayCode){
+       
+    let date = new Date (dayCode * 1000);
+    let day = date.getDay();
+    return day;
+}
+
 function makeForecast(response) {
-    console.log(response);
+    
+   
     let forecast = document.querySelector("#forecast");
-    let forecastDays = ["Sun", "Mon", "Tue", "Wed", "Thu"];
+    let forecastDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    let dailyForecast = response.data.daily;
     let forecastHTML = "";
-    forecastDays.forEach(function (day) {
-        forecastHTML = forecastHTML + `
+   
+    dailyForecast.forEach(function (day, index) {
+        if (index < 5) {
+        forecastHTML += `
         <div class="card col">
-            <h5 class="card-title">${day}</h5>
+            <h5 class="card-title">${forecastDays[formatDay(day.time)]}</h5>
             <div class="row">
                 <div class="col"> 
-                    <img src="img/sun-cloud.png" class="card-img-top" alt="sun-cloud" />
+                    <img src="${day.condition.icon_url}" class="card-img-top" alt="${day.condition.icon}" />
                 </div>
                 <p class="card-text col">
-                    +10°C 
+                    ${Math.round(day.temperature.maximum)}°C 
                     <br />
-                    +6°C
+                    ${Math.round(day.temperature.minimum)}°C
                 </p>
             </div>
         </div>
         `
         forecast.innerHTML = forecastHTML;
-    })
+    }})
 }
 
-makeForecast();
 searchStart("Kyiv");
 
-// function getLatLon(response){
-//     let apiKey = "c819171fe0abdc14039af4ef5dda283b";
-//     let lat = response.data[0].lat;
-//     let lon = response.data[0].lon;
-//     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
-//     axios.get(apiUrl).then(showTempCurrent);
-//    }
-
-//    function getLatLonStart(response){
-//     let apiKey = "c819171fe0abdc14039af4ef5dda283b";
-//     let lat = response.data[0].lat;
-//     let lon = response.data[0].lon;
-//     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
-//     axios.get(apiUrl).then(showStartTemp);
-//    }
-
-
-
-// function showTempCurrent(response) {
-//     let chosenCity = document.querySelector("#search-line").value;
-//     let cityShown = document.querySelector("#city-now");
-//     let tempShown = document.querySelector("#temp-number");
-//     let roundTemp = Math.round(response.data.main.temp);
-//     let tempNow = roundTemp;
-//     let clouds = document.querySelector("#cloudiness");
-//     let currentClouds = response.data.weather[0].main;
-//     let humidity = document.querySelector("#humidity");
-//     let currentHumidity = response.data.main.humidity;
-//     let wind = document.querySelector("#wind");
-//     let currentWind = Math.round(response.data.wind.speed);
-
-//     clouds.innerHTML = currentClouds;
-//     cityShown.innerHTML = chosenCity;
-//     tempShown.innerHTML = tempNow;
-//     humidity.innerHTML = currentHumidity;
-//     wind.innerHTML = currentWind;
-
-
-// }
