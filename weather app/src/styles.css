@@ -77,8 +77,13 @@ a {
 .card .row .col {
   width: 10px;
   padding: 0;
-  margin: 20px 0;
+  margin: 10px 0;
   height: 100px;
+  font-size: 22px;
+}
+
+.card-img-top {
+  width: 60px;
 }
 
 .condition {
@@ -87,6 +92,7 @@ a {
 
 #city-now {
   text-transform: capitalize;
+  font-size: 24px;
   }
 
 #current-weather-button {
@@ -98,6 +104,10 @@ a {
 
 #cloudiness {
   text-transform: capitalize;
+}
+
+#forecast {
+  margin-top: 10px;
 }
 
 div.col {

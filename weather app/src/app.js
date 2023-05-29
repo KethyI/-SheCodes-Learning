@@ -162,8 +162,7 @@ function formatDay(dayCode){
 }
 
 function makeForecast(response) {
-    
-   
+     
     let forecast = document.querySelector("#forecast");
     let forecastDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     let dailyForecast = response.data.daily;
